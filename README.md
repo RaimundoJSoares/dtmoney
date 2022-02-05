@@ -10,3 +10,4 @@ TypeScript <br>
 Styled Components <br>
 MirageJS <br>
 Axios <br>
+Polished
