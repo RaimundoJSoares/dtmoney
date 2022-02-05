@@ -1,9 +1,10 @@
-import { FormEvent, useState, useContext } from 'react';
+import { FormEvent, useState } from 'react';
 import Modal from 'react-modal';
 import closeIMG from '../../assets/close.svg'
 import IncomeIMG from '../../assets/income.svg'
 import OutcomeIMG from '../../assets/outcome.svg'
-import { TransactionsContext } from '../../TransactionsContext';
+import { useTransactions } from '../../hooks/UseTransactions';
+
 import { Container, TransactionTypeContainer, RadioBox } from './styles';
 
 interface NewTransactionModalProps {
@@ -13,7 +14,7 @@ interface NewTransactionModalProps {
 }
 
 export function NewTransactionModal({isOpen, onRequestClose} : NewTransactionModalProps) {
-  const {createTransaction}= useContext(TransactionsContext)
+  const {createTransaction}= useTransactions();
 
   const [type, setType] = useState('deposit')
   //sempre iniciar uma informação com o mesmo formato da informação que armazenamos no estado.
@@ -21,17 +22,23 @@ export function NewTransactionModal({isOpen, onRequestClose} : NewTransactionMod
   const [amount, setAmount] = useState(0) //input numero começando com valor numero 0
   const [category, setCategory] = useState('')
 
-  function handleCreateNewTransaction(event: FormEvent) { //toda vez que o usuario clicar com enter por exemplo, ele executar essa função
+  async function handleCreateNewTransaction(event: FormEvent) { //toda vez que o usuario clicar com enter por exemplo, ele executar essa função
     event.preventDefault()
-  }
+  
 
-  createTransaction({
+  await createTransaction({
     title,
     amount,
     category,
     type,
-  })}
-
+  })
+  
+  setAmount(0);
+  setCategory('');
+  setTitle('');
+  setType('deposit');
+  onRequestClose()
+  }
   return(
     <>
      <Modal 
