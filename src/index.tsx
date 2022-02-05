@@ -5,7 +5,7 @@ import {App} from './App';
 
 createServer({
   models: {
-    transaction: Model,
+    transaction: Model, 
   },
 
   seeds(server) {
@@ -25,7 +25,7 @@ createServer({
           type: 'withdraw',
           category: 'Casa',
           amount: 1000,
-          createdAt: new Date('2021-02-14 11:00:00'),
+          createdAt: new Date('2021-02-10 11:00:00'),
         }
       ]
     })
@@ -38,7 +38,7 @@ createServer({
       return this.schema.all('transaction')
     })
 
-    this.post('/transactions', (schema, request)=>{
+    this.post('/transactions', (schema, request)=> {
       const data = JSON.parse(request.requestBody)
 
       return schema.create('transaction', data) //schema é o banco de dados 
